@@ -31,7 +31,6 @@ body {
   background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
   background-position: 0 0, 0 0, 0 0, 0 0;
   background-attachment: fixed;
-  filter: blur(1px);
   color: var(--text);
   font-family: var(--font-ui);
   height: 100vh;
