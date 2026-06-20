@@ -22,7 +22,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background: var(--bg);
+  background: linear-gradient(135deg, #0d0d0f 0%, #1a1420 50%, #0f1f2e 100%);
   color: var(--text);
   font-family: var(--font-ui);
   height: 100vh;
@@ -35,19 +35,24 @@ a { color: inherit; text-decoration: none; }
    ══════════════════════════════════════════════════════════ */
 .sidebar-panel {
   position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  left: 16px;
+  top: 16px;
+  bottom: 16px;
   width: var(--sidebar-w);
-  background: rgba(22, 22, 24, 0.7);
-  backdrop-filter: blur(20px) saturate(1.5);
-  border-right: 1px solid rgba(201, 168, 76, 0.2);
+  background: rgba(22, 22, 24, 0.6);
+  backdrop-filter: blur(30px) saturate(2);
+  border: 1px solid rgba(201, 168, 76, 0.3);
   z-index: 100;
   display: flex;
   flex-direction: column;
   padding: 32px 8px;
   overflow-y: auto;
   overflow-x: hidden;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  animation: float 6s ease-in-out infinite;
 }
 
 .sidebar-content {
@@ -83,8 +88,8 @@ a { color: inherit; text-decoration: none; }
   left: 20px;
   width: 44px;
   height: 44px;
-  background: rgba(22, 22, 24, 0.8);
-  border: 1px solid var(--border);
+  background: rgba(22, 22, 24, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   z-index: 150;
   cursor: pointer;
@@ -92,13 +97,14 @@ a { color: inherit; text-decoration: none; }
   flex-direction: column;
   justify-content: center;
   gap: 6px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
   transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar-toggle-mobile:hover {
-  background: rgba(201, 168, 76, 0.15);
-  border-color: var(--gold-dim);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .sidebar-toggle-mobile span {
@@ -191,6 +197,8 @@ a { color: inherit; text-decoration: none; }
   transition: all 0.3s ease;
   position: relative;
   overflow: visible;
+  filter: grayscale(1);
+  opacity: 0.6;
 }
 
 .cat-btn::before {
@@ -198,9 +206,10 @@ a { color: inherit; text-decoration: none; }
 }
 
 .cat-btn:hover {
-  background: rgba(201, 168, 76, 0.1);
-  color: var(--gold-dim);
-  border-color: rgba(201, 168, 76, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  opacity: 0.9;
+  filter: grayscale(0.8);
 }
 
 .cat-btn:hover::after {
@@ -209,9 +218,10 @@ a { color: inherit; text-decoration: none; }
 }
 
 .cat-btn.active {
-  background: rgba(201, 168, 76, 0.15);
-  color: var(--gold);
-  border-color: var(--gold-dim);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  opacity: 1;
+  filter: grayscale(0);
 }
 
 .cat-btn.active::after {
@@ -236,15 +246,16 @@ a { color: inherit; text-decoration: none; }
   transition: opacity 0.2s ease;
   pointer-events: none;
   z-index: 10;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .cat-count {
   position: absolute;
   bottom: 0;
   right: 0;
-  background: var(--gold);
-  color: var(--bg);
+  background: rgba(255, 255, 255, 0.25);
+  color: var(--text);
   font-size: 0.65rem;
   padding: 2px 4px;
   border-radius: 50%;
@@ -254,6 +265,7 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -261,13 +273,13 @@ a { color: inherit; text-decoration: none; }
    ══════════════════════════════════════════════════════════ */
 .main-container {
   position: fixed;
-  left: var(--sidebar-w);
+  left: calc(var(--sidebar-w) + 32px);
   top: 0;
   right: 0;
   bottom: 0;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
+  background: transparent;
 }
 
 /* ── Свайпер ──────────────────────────────────────────────── */
@@ -313,12 +325,13 @@ a { color: inherit; text-decoration: none; }
   bottom: 40px;
   right: 40px;
   max-width: 300px;
-  background: rgba(22, 22, 24, 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border);
+  background: rgba(22, 22, 24, 0.7);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(201, 168, 76, 0.2);
   border-radius: var(--radius);
   padding: 20px;
   z-index: 10;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .trident-title {
@@ -361,6 +374,11 @@ a { color: inherit; text-decoration: none; }
   50% { transform: translateX(-50%) translateY(-8px); }
 }
 
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
 /* ── Навігаційні кнопки ───────────────────────────────────── */
 .nav-controls {
   position: absolute;
@@ -375,21 +393,22 @@ a { color: inherit; text-decoration: none; }
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(22, 22, 24, 0.8);
-  border: 1px solid var(--border);
+  background: rgba(22, 22, 24, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--text);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .nav-btn:hover {
-  background: rgba(201, 168, 76, 0.15);
-  border-color: var(--gold-dim);
-  color: var(--gold);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--text);
   transform: scale(1.1);
 }
 
@@ -414,13 +433,13 @@ a { color: inherit; text-decoration: none; }
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--border);
+  background: rgba(255, 255, 255, 0.3);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .progress-dot.active {
-  background: var(--gold);
+  background: rgba(255, 255, 255, 0.9);
   width: 24px;
   border-radius: 4px;
 }
@@ -433,6 +452,10 @@ a { color: inherit; text-decoration: none; }
     --sidebar-w: 80px;
   }
   
+  .main-container {
+    left: calc(var(--sidebar-w) + 32px);
+  }
+
   .trident-info {
     bottom: 20px;
     right: 20px;
@@ -455,10 +478,14 @@ a { color: inherit; text-decoration: none; }
   }
 
   .sidebar-panel {
+    left: 16px;
+    top: 16px;
+    bottom: 16px;
     width: 80px;
-    transform: translateX(-100%);
+    transform: translateX(-112px);
     transition: transform 0.3s ease;
     z-index: 200;
+    border-radius: 16px;
   }
 
   .sidebar-panel.open {
