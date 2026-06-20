@@ -288,7 +288,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   flex-direction: column;
   background: transparent;
-  z-index: 1;
+  z-index: 100;
 }
 
 /* ── Свайпер ──────────────────────────────────────────────── */
@@ -385,12 +385,12 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Навігаційні кнопки ───────────────────────────────────── */
 .nav-controls {
-  position: absolute;
+  position: fixed;
   bottom: 40px;
   left: 40px;
   display: flex;
   gap: 12px;
-  z-index: 210;
+  z-index: 300;
 }
 
 .nav-btn {
