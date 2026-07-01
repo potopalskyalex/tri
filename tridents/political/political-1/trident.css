@@ -1,0 +1,212 @@
+/* ═══════════════════════════════════════════════════════════
+   trident.css — стилі сторінки тризуба
+
+   ╔══════════════════════════════════════════════════════════╗
+   ║  РОЗРОБНИКУ: ЦЕЙ ФАЙЛ — ТВІЙ                           ║
+   ║  Тут можна змінювати кольори, фони, шрифти, відступи.   ║
+   ║  Змінюй значення CSS-змінних нижче — і сторінка стане   ║
+   ║  несхожою на інші. Але не ламай назви класів!           ║
+   ╚══════════════════════════════════════════════════════════╝
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Кольори ЦІЄЇ сторінки (змінюй!) ─────────────────────── */
+:root {
+  --page-accent: #c9a84c;      /* ← ЗМІНИ: основний колір акценту */
+  --page-bg:     #0d0d0f;      /* ← ЗМІНИ: фон hero-слайду */
+  --page-glow:   rgba(201, 168, 76, 0.15); /* ← свічення навколо SVG */
+}
+
+/* ── Hero слайд ───────────────────────────────────────────── */
+.slide-hero {
+  background: var(--page-bg);
+  /* ╔══════════════════════════════════════════╗
+     ║  РОЗРОБНИКУ: можна змінити фон.          ║
+     ║  Приклади:                               ║
+     ║  background: radial-gradient(...)        ║
+     ║  background: url('texture.png')          ║
+     ╚══════════════════════════════════════════╝ */
+}
+
+/* ── SVG контейнер ────────────────────────────────────────── */
+.hero-svg-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 60px 40px 100px;
+}
+.hero-svg {
+  max-width: 380px;
+  max-height: 70vh;
+  width: 100%;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  /* ╔══════════════════════════════════════════╗
+     ║  РОЗРОБНИКУ: щоб SVG був золотим:        ║
+     ║  filter: brightness(0) saturate(100%)    ║
+     ║    invert(73%) sepia(34%)                ║
+     ║    saturate(600%) hue-rotate(10deg);     ║
+     ╚══════════════════════════════════════════╝ */
+}
+
+/* ── Hero підпис ──────────────────────────────────────────── */
+.hero-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 24px 32px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  pointer-events: none;
+}
+.hero-era {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--page-accent);
+  margin-bottom: 6px;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  font-weight: normal;
+  color: #fff;
+}
+
+/* ── Підказка свайпу ──────────────────────────────────────── */
+.swipe-hint {
+  position: absolute;
+  bottom: 80px; right: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.5;
+  font-size: 0.7rem;
+  color: var(--page-accent);
+  animation: bounce 2s infinite;
+}
+.hint-icon { font-size: 1.2rem; }
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
+}
+
+/* ── Info слайд ───────────────────────────────────────────── */
+.slide-info {
+  background: var(--surface);
+  overflow: hidden;
+}
+.info-scroll {
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.info-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 60px 32px 80px;
+}
+
+/* ── Секції тексту ────────────────────────────────────────── */
+.info-section {
+  margin-bottom: 40px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: normal;
+  color: var(--page-accent);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  /* ╔══════════════════════════════════════════╗
+     ║  РОЗРОБНИКУ: можна змінити стиль лінії  ║
+     ╚══════════════════════════════════════════╝ */
+}
+.section-text {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--text);
+}
+.info-quote {
+  border-left: 3px solid var(--page-accent);
+  padding: 12px 20px;
+  margin: 0;
+  background: var(--surface2);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* ── Lang content ─────────────────────────────────────────── */
+.lang-content.hidden { display: none; }
+
+/* ── Team block ───────────────────────────────────────────── */
+.team-block {
+  margin-top: 60px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.team-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.team-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 110px;
+  flex: 1;
+}
+.team-icon { font-size: 1.4rem; }
+.team-role {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+.team-name {
+  font-size: 0.85rem;
+  color: var(--text);
+  text-align: center;
+}
+
+/* ── Back button ──────────────────────────────────────────── */
+.back-btn {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+.back-btn:hover { color: var(--gold); }
+
+/* ── Swiper налаштування ──────────────────────────────────── */
+.trident-swiper {
+  width: 100%;
+  height: 100vh;
+  padding-top: var(--header-h) !important;
+}
+.swiper-slide {
+  position: relative;
+  height: calc(100vh - var(--header-h));
+}
+
+/* ── Мобільний ────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .hero-title { font-size: 1.3rem; }
+  .info-inner { padding: 40px 20px 60px; }
+  .team-card  { min-width: 90px; padding: 10px 12px; }
+}

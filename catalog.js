@@ -7,6 +7,26 @@ let currentCategory = 'all';
 let filteredTridents = [];
 let swiperInstance = null;
 
+function getInitialCategory() {
+  if (window.__INITIAL_CATEGORY) return window.__INITIAL_CATEGORY;
+
+  const pathname = window.location.pathname.toLowerCase();
+  const matched = pathname.match(/\/categories\/([a-z-]+)\.html$/);
+
+  if (matched && matched[1]) {
+    return matched[1];
+  }
+
+  return 'all';
+}
+
+function navigateWithTransition(url, direction = 'left') {
+  document.body.classList.add(direction === 'left' ? 'page-transition-left' : 'page-transition-right');
+  window.setTimeout(() => {
+    window.location.href = url;
+  }, 430);
+}
+
 // ── Мова ───────────────────────────────────────────────────
 function setLang(lang) {
   currentLang = lang;
@@ -37,20 +57,19 @@ function renderMenu() {
   // Іконки для категорій
   const icons = {
     'all': '✦',
-    'historical': '⚔',
-    'military': '🛡',
-    'political': '👑',
-    'charitable': '❤',
-    'cultural': '🎭'
+    'historical': '◆',
+    'military': '◈',
+    'political': '✚',
+    'charitable': '✿',
+    'cultural': '⬢'
   };
 
   // "Всі" пункт
   const allLi = document.createElement('li');
   const allBtn = document.createElement('button');
-  allBtn.className = 'cat-btn active';
+  allBtn.className = 'cat-btn';
   allBtn.dataset.id = 'all';
   allBtn.dataset.tooltip = currentLang === 'ua' ? 'Всі тризуби' : 'All Tridents';
-  allBtn.textContent = icons['all'];
   allBtn.innerHTML = `${icons['all']}<span class="cat-count">−</span>`;
   allLi.appendChild(allBtn);
   list.appendChild(allLi);
@@ -62,35 +81,38 @@ function renderMenu() {
     btn.className = 'cat-btn';
     btn.dataset.id = cat.id;
     btn.dataset.tooltip = currentLang === 'ua' ? cat.ua : cat.en;
-    btn.textContent = icons[cat.id] || '◆';
     btn.innerHTML = `${icons[cat.id] || '◆'}<span class="cat-count">${count}</span>`;
     li.appendChild(btn);
     list.appendChild(li);
   });
 
+  list.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.id === currentCategory);
+  });
+
   list.addEventListener('click', e => {
     const btn = e.target.closest('.cat-btn');
     if (!btn) return;
-    currentCategory = btn.dataset.id;
-    list.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    
-    // Генерувати новий набір тризубів для даної категорії
-    filterAndRenderTridents();
-    
-    // Закрити sidebar на мобільному
-    document.querySelector('.sidebar-panel').classList.remove('open');
+
+    e.preventDefault();
+
+    if (btn.dataset.id === 'all') {
+      navigateWithTransition('/index.html', 'right');
+      return;
+    }
+
+    navigateWithTransition(`/categories/${btn.dataset.id}.html`, 'left');
   });
 }
 
 function updateCategoryNames() {
   const icons = {
     'all': '✦',
-    'historical': '⚔',
-    'military': '🛡',
-    'political': '👑',
-    'charitable': '❤',
-    'cultural': '🎭'
+    'historical': '◆',
+    'military': '◈',
+    'political': '✚',
+    'charitable': '✿',
+    'cultural': '⬢'
   };
 
   // Оновити tooltip для "Всі"
@@ -106,35 +128,77 @@ function updateCategoryNames() {
       btn.dataset.tooltip = currentLang === 'ua' ? cat.ua : cat.en;
     }
   });
+
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.id === currentCategory);
+  });
 }
 
-// ── Фільтрування та генерація слайдів ───────────────────────
-function filterAndRenderTridents() {
-  filteredTridents = currentCategory === 'all'
-    ? [...TRIDENTS]
-    : TRIDENTS.filter(tr => tr.category === currentCategory);
+// ── Автоматичне знаходження тризубів за папками ─────────────
+async function loadTridents(category = 'all') {
+  const categoryIds = category === 'all' ? CATEGORIES.map(c => c.id) : [category];
+  const basePath = window.location.pathname.includes('/categories/') ? '../' : '';
+  const results = [];
 
-  renderSlides();
-  initSwiper();
+  for (const catId of categoryIds) {
+    const dirUrl = `${basePath}tridents/${catId}/`;
+    try {
+      const html = await fetch(dirUrl, { cache: 'no-store' }).then(r => r.text());
+      const folderMatches = [...html.matchAll(/href="([^"]+\/)"/g)];
+      const names = folderMatches
+        .map(match => match[1].replace(/\/$/, ''))
+        .filter(name => name && name !== '.' && name !== '..');
+
+      names.forEach(name => {
+        const titleText = name.replace(/-/g, ' ');
+        results.push({
+          id: `${catId}-${name}`,
+          category: catId,
+          svg: `${basePath}tridents/${catId}/${name}/trident.svg`,
+          page: `${basePath}tridents/${catId}/${name}/index.html`,
+          title: { ua: titleText, en: titleText },
+          subtitle: { ua: '', en: '' },
+          preview: { ua: '', en: '' }
+        });
+      });
+    } catch (error) {
+      console.warn(`Unable to load tridents from ${dirUrl}`, error);
+    }
+  }
+
+  return results;
+}
+
+function filterAndRenderTridents() {
+  loadTridents(currentCategory).then(items => {
+    filteredTridents = items;
+    renderSlides();
+    initSwiper();
+  }).catch(error => {
+    console.error('Failed to load tridents:', error);
+    filteredTridents = [];
+    renderSlides();
+    initSwiper();
+  });
 }
 
 function renderSlides() {
   const wrapper = document.getElementById('tridentSlides');
   wrapper.innerHTML = '';
 
-  filteredTridents.forEach((trident, index) => {
+  const basePath = window.location.pathname.includes('/categories/') ? '../' : '';
+
+  filteredTridents.forEach((trident) => {
+    const pageHref = `${basePath}${trident.page}`;
+    const svgSrc = `${basePath}${trident.svg}`;
+
     const slide = document.createElement('div');
     slide.className = 'swiper-slide';
     slide.innerHTML = `
       <div class="trident-slide">
-        <div class="trident-svg-wrapper">
-          <img src="${trident.svg}" alt="${t(trident.title)}" loading="lazy" />
-        </div>
-        <div class="trident-info">
-          <p class="trident-subtitle">${t(trident.subtitle)}</p>
-          <h2 class="trident-title">${t(trident.title)}</h2>
-          <p class="trident-preview">${t(trident.preview)}</p>
-        </div>
+        <a class="trident-svg-wrapper" href="${pageHref}">
+          <img src="${svgSrc}" alt="${t(trident.title)}" loading="lazy" />
+        </a>
       </div>
     `;
     wrapper.appendChild(slide);
@@ -185,7 +249,7 @@ function initSwiper() {
     direction: 'horizontal',
     slidesPerView: 1,
     spaceBetween: 0,
-    loop: false,
+    loop: filteredTridents.length > 1,
     mousewheel: false,
     keyboard: {
       enabled: true,
@@ -197,9 +261,6 @@ function initSwiper() {
     on: {
       slideChange: function() {
         updateProgressIndicator();
-      },
-      reachEnd: function() {
-        // Можна додати повідомлення при достиганню кінця
       }
     }
   });
@@ -210,8 +271,10 @@ function initSwiper() {
 
 function updateProgressIndicator() {
   const dots = document.querySelectorAll('.progress-dot');
+  if (!swiperInstance) return;
+
   dots.forEach((dot, index) => {
-    dot.classList.toggle('active', index === swiperInstance.activeIndex);
+    dot.classList.toggle('active', index === (swiperInstance.activeIndex ?? 0));
   });
 }
 
@@ -262,6 +325,17 @@ function initMobileMenu() {
   }
 }
 
+document.body.addEventListener('click', (e) => {
+  const link = e.target.closest('a[href]');
+  if (!link) return;
+
+  const href = link.getAttribute('href') || '';
+  if (href.includes('/tridents/') && !href.startsWith('http')) {
+    e.preventDefault();
+    navigateWithTransition(href, 'right');
+  }
+});
+
 // ── Lang switch ────────────────────────────────────────────
 document.querySelectorAll('.lang-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -278,6 +352,7 @@ function init() {
     btn.classList.toggle('active', btn.dataset.lang === currentLang);
   });
 
+  currentCategory = getInitialCategory();
   renderMenu();
   filterAndRenderTridents();
   initMobileMenu();
