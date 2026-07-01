@@ -137,11 +137,10 @@ function updateCategoryNames() {
 // ── Автоматичне знаходження тризубів за папками ─────────────
 async function loadTridents(category = 'all') {
   const categoryIds = category === 'all' ? CATEGORIES.map(c => c.id) : [category];
-  const basePath = window.location.pathname.includes('/categories/') ? '../' : '';
   const results = [];
 
   for (const catId of categoryIds) {
-    const dirUrl = `${basePath}tridents/${catId}/`;
+    const dirUrl = `tridents/${catId}/`;
     try {
       const html = await fetch(dirUrl, { cache: 'no-store' }).then(r => r.text());
       const folderMatches = [...html.matchAll(/href="([^"]+\/)"/g)];
@@ -154,8 +153,8 @@ async function loadTridents(category = 'all') {
         results.push({
           id: `${catId}-${name}`,
           category: catId,
-          svg: `${basePath}tridents/${catId}/${name}/trident.svg`,
-          page: `${basePath}tridents/${catId}/${name}/index.html`,
+          svg: `tridents/${catId}/${name}/trident.svg`,
+          page: `tridents/${catId}/${name}/index.html`,
           title: { ua: titleText, en: titleText },
           subtitle: { ua: '', en: '' },
           preview: { ua: '', en: '' }
@@ -186,11 +185,9 @@ function renderSlides() {
   const wrapper = document.getElementById('tridentSlides');
   wrapper.innerHTML = '';
 
-  const basePath = window.location.pathname.includes('/categories/') ? '../' : '';
-
   filteredTridents.forEach((trident) => {
-    const pageHref = `${basePath}${trident.page}`;
-    const svgSrc = `${basePath}${trident.svg}`;
+    const pageHref = trident.page;
+    const svgSrc = trident.svg;
 
     const slide = document.createElement('div');
     slide.className = 'swiper-slide';
