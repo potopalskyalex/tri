@@ -11,6 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate site
+        run: npm test
+
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -22,3 +29,8 @@ jobs:
             **/.git*
             **/.git*/**
             README.md
+            package.json
+            package-lock.json
+            scripts/**
+            .github/**
+            .vscode/**

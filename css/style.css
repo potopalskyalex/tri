@@ -91,13 +91,13 @@ button { font-family: inherit; }
   flex: 0 0 auto;
 }
 
-.rail-item .rail-svg {
+.rail-icon .lucide {
   width: 20px;
   height: 20px;
   stroke: currentColor;
 }
 
-.rail-home .rail-svg { width: 19px; height: 19px; }
+.rail-home .rail-icon .lucide { width: 19px; height: 19px; }
 
 .rail-item:hover {
   background: rgba(232, 196, 104, 0.08);
@@ -196,7 +196,7 @@ button { font-family: inherit; }
   margin-bottom: 20px;
   background: radial-gradient(circle, rgba(201,162,39,0.10), transparent 70%);
 }
-.cat-svg { width: 24px; height: 24px; stroke: var(--gold-bright); }
+.cat-roundel .lucide { width: 24px; height: 24px; stroke: var(--gold-bright); }
 
 /* ===== Grid & Cards ===== */
 .grid {
@@ -240,8 +240,8 @@ button { font-family: inherit; }
   box-shadow: 0 0 0 4px rgba(201, 162, 39, 0.08);
 }
 
-.card-svg { width: 24px; height: 24px; stroke: var(--gold); }
-.card:hover .card-svg { stroke: var(--gold-bright); }
+.card-roundel .lucide { width: 24px; height: 24px; stroke: var(--gold); }
+.card:hover .card-roundel .lucide { stroke: var(--gold-bright); }
 
 .card-name {
   font-family: 'IBM Plex Mono', monospace;
@@ -259,6 +259,12 @@ button { font-family: inherit; }
   min-height: 100vh;
   position: relative;
   padding-left: calc(var(--rail-w) + 40px);
+}
+
+.main.detail {
+  margin-left: 0;
+  max-width: none;
+  padding: 40px 28px 40px calc(var(--rail-w) + 40px);
 }
 
 .detail-card {
@@ -295,7 +301,7 @@ button { font-family: inherit; }
   border: 1px dashed var(--line);
 }
 
-.detail-svg { width: 46px; height: 46px; stroke: var(--gold-bright); }
+.detail-roundel .lucide { width: 46px; height: 46px; stroke: var(--gold-bright); }
 
 .detail .eyebrow { margin-bottom: 10px; }
 .detail .title { font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 20px; }
@@ -368,7 +374,7 @@ button { font-family: inherit; }
 .nav-arrow:hover { background: rgba(232, 196, 104, 0.12); color: var(--gold-bright); }
 .nav-arrow.nav-prev { left: calc(var(--rail-w) + 28px); }
 .nav-arrow.nav-next { right: 28px; }
-.arrow-svg { width: 20px; height: 20px; stroke: currentColor; }
+.nav-arrow .lucide { width: 20px; height: 20px; stroke: currentColor; }
 .nav-arrow[disabled] { opacity: 0.25; pointer-events: none; }
 
 /* ===== Mobile ===== */
@@ -399,6 +405,7 @@ button { font-family: inherit; }
     padding-left: 0;
     padding: 40px 20px 120px;
   }
+  .main.detail { padding: 40px 20px 120px; }
   .detail-card { padding: 40px 26px; }
 
   .nav-arrow { width: 44px; height: 44px; top: auto; bottom: 90px; transform: none; }
@@ -410,3 +417,4 @@ button { font-family: inherit; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
