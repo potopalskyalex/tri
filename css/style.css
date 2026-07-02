@@ -27,7 +27,7 @@ html, body {
   padding: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Geologica', system-ui, sans-serif;
   min-height: 100%;
 }
 
@@ -189,21 +189,73 @@ button { font-family: inherit; }
 }
 
 .title {
-  font-family: 'Fraunces', serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-size: clamp(2.4rem, 5vw, 3.6rem);
-  line-height: 1.05;
+  font-family: 'Geologica', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(3rem, 6vw, 5rem);
+  line-height: 0.95;
   margin: 0 0 16px;
   color: var(--ink);
 }
 
 .lede {
-  font-size: 16px;
+  font-size: clamp(17px, 1.7vw, 22px);
   line-height: 1.6;
   color: var(--muted);
   margin: 0;
   max-width: 52ch;
+}
+
+.hero-compact {
+  max-width: 760px;
+}
+
+.hero-compact .cat-roundel,
+.hero-compact .eyebrow {
+  display: none;
+}
+
+.hero-compact + .grid {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+
+.hero-compact + .grid .card {
+  min-height: 196px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  justify-content: center;
+}
+
+.hero-compact + .grid .card:hover {
+  background: transparent;
+  border-color: transparent;
+  transform: translateY(-3px);
+}
+
+.hero-compact + .grid .card-roundel {
+  width: clamp(116px, 14vw, 184px);
+  height: clamp(116px, 14vw, 184px);
+  border: 0;
+  border-radius: 0;
+}
+
+.hero-compact + .grid .card:hover .card-roundel {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.hero-compact + .grid .card-roundel .lucide {
+  width: clamp(68px, 9vw, 116px);
+  height: clamp(68px, 9vw, 116px);
+  stroke: var(--gold);
+  stroke-width: 1.75;
+}
+
+.hero-compact + .grid .card-name {
+  display: none;
 }
 
 .cat-roundel {
@@ -276,14 +328,18 @@ button { font-family: inherit; }
   max-width: none;
 }
 
+.listing-main {
+  max-width: none;
+}
+
 .trident-icon-grid {
-  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
-  gap: clamp(18px, 3vw, 34px);
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: clamp(28px, 4vw, 56px);
   align-items: center;
 }
 
 .trident-icon-grid .card {
-  min-height: 104px;
+  min-height: 196px;
   padding: 0;
   background: transparent;
   border: 0;
@@ -298,8 +354,8 @@ button { font-family: inherit; }
 }
 
 .trident-icon-grid .card-roundel {
-  width: clamp(58px, 7vw, 92px);
-  height: clamp(58px, 7vw, 92px);
+  width: clamp(116px, 14vw, 184px);
+  height: clamp(116px, 14vw, 184px);
   border: 0;
   border-radius: 0;
 }
@@ -310,8 +366,8 @@ button { font-family: inherit; }
 }
 
 .trident-icon-grid .card-roundel .lucide {
-  width: clamp(34px, 4.5vw, 58px);
-  height: clamp(34px, 4.5vw, 58px);
+  width: clamp(68px, 9vw, 116px);
+  height: clamp(68px, 9vw, 116px);
   stroke: var(--gold);
   stroke-width: 1.75;
 }
@@ -472,6 +528,29 @@ button { font-family: inherit; }
   .main {
     margin-left: 0;
     padding: 40px 20px 100px;
+  }
+
+  .trident-icon-grid,
+  .hero-compact + .grid {
+    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    gap: 24px 18px;
+  }
+
+  .trident-icon-grid .card,
+  .hero-compact + .grid .card {
+    min-height: 150px;
+  }
+
+  .trident-icon-grid .card-roundel,
+  .hero-compact + .grid .card-roundel {
+    width: clamp(96px, 34vw, 132px);
+    height: clamp(96px, 34vw, 132px);
+  }
+
+  .trident-icon-grid .card-roundel .lucide,
+  .hero-compact + .grid .card-roundel .lucide {
+    width: clamp(58px, 22vw, 84px);
+    height: clamp(58px, 22vw, 84px);
   }
 
   .home-hero {

@@ -69,7 +69,8 @@ for (const file of htmlFiles) {
     const href = match[1];
     if (/^(https?:|mailto:|tel:|#)/.test(href) || href.startsWith("data:")) continue;
 
-    const target = path.resolve(path.dirname(file), href);
+    const cleanHref = href.split("#")[0].split("?")[0];
+    const target = path.resolve(path.dirname(file), cleanHref);
     assert(fs.existsSync(target), `${relative(file)} links to missing target ${href}.`);
   }
 }
