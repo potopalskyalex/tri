@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "istorychni",
+    "name": "Історичні",
+    "icon": "scroll-text",
+    "desc": "Давні форми тризуба"
+  },
+  {
+    "slug": "vijskovi",
+    "name": "Військові",
+    "icon": "shield",
+    "desc": "Оборонна символіка"
+  },
+  {
+    "slug": "mystetski",
+    "name": "Мистецькі",
+    "icon": "palette",
+    "desc": "Художні інтерпретації"
+  },
+  {
+    "slug": "rehionalni",
+    "name": "Регіональні",
+    "icon": "map-pin",
+    "desc": "Місцеві варіації"
+  },
+  {
+    "slug": "suchasni",
+    "name": "Сучасні",
+    "icon": "sparkles",
+    "desc": "Нові прочитання"
+  }
+]
