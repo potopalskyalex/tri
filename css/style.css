@@ -158,6 +158,27 @@ button { font-family: inherit; }
 .hero { margin-bottom: 44px; max-width: 640px; }
 .hero-compact { display: flex; flex-direction: column; align-items: flex-start; }
 
+.home-hero {
+  min-height: calc(100vh - 144px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.home-mark {
+  width: clamp(76px, 12vw, 136px);
+  height: clamp(76px, 12vw, 136px);
+  color: var(--gold-bright);
+  margin-bottom: 28px;
+}
+
+.home-mark .lucide {
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.5;
+  filter: drop-shadow(0 24px 60px rgba(201, 162, 39, 0.22));
+}
+
 .eyebrow {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 12.5px;
@@ -250,6 +271,54 @@ button { font-family: inherit; }
   text-align: center;
 }
 .card:hover .card-name { color: var(--ink); }
+
+.home-main {
+  max-width: none;
+}
+
+.trident-icon-grid {
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: clamp(18px, 3vw, 34px);
+  align-items: center;
+}
+
+.trident-icon-grid .card {
+  min-height: 104px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  justify-content: center;
+}
+
+.trident-icon-grid .card:hover {
+  background: transparent;
+  border-color: transparent;
+  transform: translateY(-3px);
+}
+
+.trident-icon-grid .card-roundel {
+  width: clamp(58px, 7vw, 92px);
+  height: clamp(58px, 7vw, 92px);
+  border: 0;
+  border-radius: 0;
+}
+
+.trident-icon-grid .card:hover .card-roundel {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.trident-icon-grid .card-roundel .lucide {
+  width: clamp(34px, 4.5vw, 58px);
+  height: clamp(34px, 4.5vw, 58px);
+  stroke: var(--gold);
+  stroke-width: 1.75;
+}
+
+.trident-icon-grid .card-name {
+  display: none;
+}
 
 /* ===== Detail page ===== */
 .detail {
@@ -403,6 +472,10 @@ button { font-family: inherit; }
   .main {
     margin-left: 0;
     padding: 40px 20px 100px;
+  }
+
+  .home-hero {
+    min-height: calc(100vh - 140px);
   }
 
   .main.detail { padding: 28px 20px 112px; }

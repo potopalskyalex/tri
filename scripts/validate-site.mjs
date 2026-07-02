@@ -74,7 +74,9 @@ for (const file of htmlFiles) {
   }
 }
 
-assert(htmlFiles.length === tridents.length + categories.length + 1, `Expected ${tridents.length + categories.length + 1} HTML files, found ${htmlFiles.length}.`);
+const rootPageCount = 2;
+const expectedHtmlCount = tridents.length + categories.length + rootPageCount;
+assert(htmlFiles.length === expectedHtmlCount, `Expected ${expectedHtmlCount} HTML files, found ${htmlFiles.length}.`);
 
 if (errors.length > 0) {
   console.error("Site validation failed:");
